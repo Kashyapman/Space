@@ -32,29 +32,27 @@
             background: #6b7280; /* bg-gray-500 */
         }
          .nav-link {
-              display: flex;
-              align-items: center;
-              padding: 0.75rem 1rem;
-              border-radius: 0.5rem;
-              color: #d1d5db; /* text-gray-300 */
-              font-weight: 500;
-              transition: background-color 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            color: #d1d5db; /* text-gray-300 */
+            font-weight: 500;
+            transition: background-color 0.2s, color 0.2s;
          }
          .nav-link:hover, .nav-link.active {
             background-color: #374151; /* bg-gray-700 */
             color: white;
          }
          .nav-link i {
-             margin-right: 1rem;
+            margin-right: 1rem;
          }
     </style>
 </head>
 <body>
 
-    <!-- Main Application Wrapper -->
     <div id="app" class="h-screen flex flex-col">
 
-        <!-- Header -->
         <header class="bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 px-4 py-2 flex items-center justify-between z-40 sticky top-0">
             <div class="flex items-center space-x-4">
                 <button id="menu-toggle" class="p-2 rounded-full hover:bg-gray-700 md:hidden">
@@ -67,76 +65,77 @@
             </div>
             <div class="flex-1 max-w-xl mx-4">
                 <div class="relative">
-                    <input type="search" placeholder="Search for courses, videos, books..." class="bg-gray-900 border border-gray-700 rounded-full w-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-rose-500">
+                    <input id="search-input" type="search" placeholder="Search on YouTube..." class="bg-gray-900 border border-gray-700 rounded-full w-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-rose-500">
                     <div class="absolute left-3 top-1/2 -translate-y-1/2">
                         <i data-lucide="search" class="w-5 h-5 text-gray-400"></i>
                     </div>
                 </div>
             </div>
             <div id="user-actions" class="flex items-center space-x-4">
-                <!-- User actions would be here (e.g., Login/Profile) -->
-                 <a href="login.html" class="bg-transparent border border-rose-500 text-rose-500 px-4 py-1.5 rounded-md text-sm font-semibold hover:bg-rose-500 hover:text-white transition-colors">Log In</a>
+                <a href="login.html" class="bg-transparent border border-rose-500 text-rose-500 px-4 py-1.5 rounded-md text-sm font-semibold hover:bg-rose-500 hover:text-white transition-colors">Log In</a>
             </div>
         </header>
         
         <div class="flex flex-1 overflow-hidden">
-            <!-- Sidebar -->
             <aside id="sidebar" class="bg-gray-800 w-64 flex-shrink-0 flex flex-col space-y-2 p-4 fixed top-16 h-[calc(100vh-4rem)] md:relative md:top-0 md:h-full transform -translate-x-full md:translate-x-0 z-30">
-                  <nav class="flex flex-col space-y-1 flex-1">
-                      <a href="#" class="nav-link active"><i data-lucide="home"></i><span>Home</span></a>
-                      <a href="#" class="nav-link"><i data-lucide="book-open"></i><span>E-Books</span></a>
-                      <a href="#" class="nav-link"><i data-lucide="trending-up"></i><span>Trending</span></a>
-                      <a href="#" class="nav-link"><i data-lucide="users"></i><span>Subscriptions</span></a>
-                      <hr class="border-gray-700 my-4">
-                      <a href="#" class="nav-link"><i data-lucide="library"></i><span>Library</span></a>
-                      <a href="#" class="nav-link"><i data-lucide="history"></i><span>History</span></a>
-                      <a href="#" class="nav-link"><i data-lucide="video"></i><span>Your Videos</span></a>
-                      <a href="#" class="nav-link"><i data-lucide="clock"></i><span>Watch Later</span></a>
-                  </nav>
-                  <div class="text-xs text-gray-500 p-2">
-                      &copy; 2025 Space. All rights reserved.
-                  </div>
+                <nav class="flex flex-col space-y-1 flex-1">
+                    <a href="#" class="nav-link active"><i data-lucide="home"></i><span>Home</span></a>
+                    <a href="#" class="nav-link"><i data-lucide="book-open"></i><span>E-Books</span></a>
+                    <a href="#" class="nav-link"><i data-lucide="trending-up"></i><span>Trending</span></a>
+                    <a href="#" class="nav-link"><i data-lucide="users"></i><span>Subscriptions</span></a>
+                    <hr class="border-gray-700 my-4">
+                    <a href="#" class="nav-link"><i data-lucide="library"></i><span>Library</span></a>
+                    <a href="#" class="nav-link"><i data-lucide="history"></i><span>History</span></a>
+                    <a href="#" class="nav-link"><i data-lucide="video"></i><span>Your Videos</span></a>
+                    <a href="#" class="nav-link"><i data-lucide="clock"></i><span>Watch Later</span></a>
+                </nav>
+                <div class="text-xs text-gray-500 p-2">
+                    &copy; 2025 Space. All rights reserved.
+                </div>
             </aside>
 
-            <!-- Main Content -->
             <main id="main-content" class="flex-1 bg-gray-900 overflow-y-auto">
                 
-                <!-- Page: Home (Video Grid) -->
                 <div id="home-page" class="p-4 md:p-8">
                     <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10">
-                        <!-- Video cards will be injected here -->
-                    </div>
+                        </div>
                 </div>
+
+                <div id="video-player-container" class="hidden p-4 md:p-8">
+                    </div>
 
             </main>
         </div>
     </div>
     
     <script>
-        // --- DATA MOCKUP ---
-        // To see the "No videos yet" message, keep this array empty.
-        // To see the video grid, uncomment the video objects below.
-        const mockData = {
+        // --- REAL YOUTUBE VIDEO DATA ---
+        const videoData = {
             videos: [
-                 { id: 1, title: 'Introduction to Quantum Computing', channel: 'Science Explained', views: '1.2M', posted: '2 weeks ago', duration: '15:30', thumbnail: 'https://placehold.co/600x400/1e293b/ffffff?text=Quantum', channelAvatar: 'https://placehold.co/40x40/ef4444/ffffff?text=S' },
-                 { id: 2, title: 'Mastering JavaScript Promises in 20 Minutes', channel: 'CodeMasters', views: '870K', posted: '1 month ago', duration: '22:15', thumbnail: 'https://placehold.co/600x400/1e293b/ffffff?text=JS', channelAvatar: 'https://placehold.co/40x40/22c55e/ffffff?text=C' },
-                 { id: 3, title: 'The Complete Guide to 3D Printing', channel: 'MakerSpace', views: '450K', posted: '3 days ago', duration: '45:10', thumbnail: 'https://placehold.co/600x400/1e293b/ffffff?text=3D+Print', channelAvatar: 'https://placehold.co/40x40/3b82f6/ffffff?text=M' },
-                 { id: 4, title: 'Beginner\'s Guide to Blender 3.0', channel: '3D Guru', views: '750K', posted: '5 days ago', duration: '1:12:30', thumbnail: 'https://placehold.co/600x400/1e293b/ffffff?text=Blender', channelAvatar: 'https://placehold.co/40x40/f97316/ffffff?text=G' },
-
+                { videoId: 'zOjov-2OZ0E', title: 'HTML Full Course - Build a Website Tutorial', channel: 'freeCodeCamp.org', views: '7.1M', posted: '2 years ago', duration: '4:37:33' },
+                { videoId: 'PkZNo7MFNFg', title: 'React JS Full Course for Beginners', channel: 'freeCodeCamp.org', views: '6.3M', posted: '2 years ago', duration: '12:00:11' },
+                { videoId: 'irqbmMNs2Bo', title: 'Python for Everybody - Full University Python Course', channel: 'freeCodeCamp.org', views: '11M', posted: '4 years ago', duration: '13:38:56' },
+                { videoId: '8hly31xKli0', title: 'Java Full Course for free ☕', channel: 'Bro Code', views: '4.8M', posted: '1 year ago', duration: '12:00:00' },
+                { videoId: 'sqJ6xZ9mUeU', title: 'SQL Tutorial - Full Database Course for Beginners', channel: 'freeCodeCamp.org', views: '6.7M', posted: '3 years ago', duration: '4:20:37' },
+                { videoId: 'pWbmaBAiVsc', title: 'Blender 3.0 Beginner Tutorial - Part 1', channel: 'Blender Guru', views: '6.9M', posted: '2 years ago', duration: '34:41' },
+                { videoId: 'fis26HvvDII', title: 'Git and GitHub for Beginners - Crash Course', channel: 'freeCodeCamp.org', views: '2.5M', posted: '3 years ago', duration: '57:42' },
+                { videoId: 'G3e-cpL7ofc', title: 'C++ Tutorial for Beginners - Full Course', channel: 'freeCodeCamp.org', views: '7.8M', posted: '3 years ago', duration: '4:01:47' }
             ]
         };
 
         // --- DOM ELEMENTS ---
-        const videoGrid = document.getElementById('video-grid');
         const menuToggle = document.getElementById('menu-toggle');
         const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content');
+        const searchInput = document.getElementById('search-input');
+        const videoGrid = document.getElementById('video-grid');
+        const homePage = document.getElementById('home-page');
+        const videoPlayerContainer = document.getElementById('video-player-container');
 
         // --- RENDER FUNCTIONS ---
         
         function renderVideoGrid() {
-            if (mockData.videos.length === 0) {
-                videoGrid.className = 'flex items-center justify-center h-96'; // Change grid to flex for centering
+            if (videoData.videos.length === 0) {
+                videoGrid.className = 'flex items-center justify-center h-96';
                 videoGrid.innerHTML = `
                     <div class="text-center text-gray-500">
                         <i data-lucide="video-off" class="w-24 h-24 mx-auto"></i>
@@ -145,42 +144,100 @@
                     </div>
                 `;
             } else {
-                 videoGrid.className = 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10'; // Revert to grid
-                 videoGrid.innerHTML = mockData.videos.map(video => `
-                     <div class="flex flex-col space-y-2 cursor-pointer">
-                         <div class="relative">
-                             <img src="${video.thumbnail}" alt="${video.title}" class="w-full h-auto object-cover rounded-lg aspect-video">
-                             <span class="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">${video.duration}</span>
-                         </div>
-                         <div class="flex items-start space-x-3">
-                             <img src="${video.channelAvatar}" alt="${video.channel}" class="w-9 h-9 rounded-full mt-1">
-                             <div>
-                                 <h3 class="font-semibold text-white text-md leading-tight">${video.title}</h3>
-                                 <p class="text-gray-400 text-sm mt-1">${video.channel}</p>
-                                 <p class="text-gray-400 text-sm">${video.views} views &bull; ${video.posted}</p>
-                             </div>
-                         </div>
-                     </div>
-                 `).join('');
+                videoGrid.className = 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10';
+                videoGrid.innerHTML = videoData.videos.map(video => `
+                    <div class="flex flex-col space-y-2 cursor-pointer video-card" data-video-id="${video.videoId}">
+                        <div class="relative">
+                            <img src="https://i.ytimg.com/vi/${video.videoId}/hqdefault.jpg" alt="${video.title}" class="w-full h-auto object-cover rounded-lg aspect-video">
+                            <span class="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">${video.duration}</span>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div>
+                                <h3 class="font-semibold text-white text-md leading-tight">${video.title}</h3>
+                                <p class="text-gray-400 text-sm mt-1">${video.channel}</p>
+                                <p class="text-gray-400 text-sm">${video.views} views &bull; ${video.posted}</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
             }
             lucide.createIcons();
         }
 
+        // --- VIDEO PLAYER FUNCTIONS ---
+
+        function playVideo(videoId) {
+            homePage.classList.add('hidden');
+            videoPlayerContainer.classList.remove('hidden');
+            videoPlayerContainer.classList.add('flex', 'flex-col', 'items-center');
+
+            videoPlayerContainer.innerHTML = `
+                <div id="player-wrapper" class="w-full max-w-4xl aspect-video bg-black transition-all duration-300">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
+                        title="YouTube video player" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="mt-4 flex space-x-4">
+                    <button id="close-player-btn" class="px-4 py-2 bg-rose-500 text-white rounded hover:bg-rose-600">Close Player</button>
+                    <button id="theater-mode-btn" class="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600">Theater Mode</button>
+                </div>
+            `;
+
+            document.getElementById('close-player-btn').addEventListener('click', closePlayer);
+            document.getElementById('theater-mode-btn').addEventListener('click', toggleTheaterMode);
+        }
+
+        function closePlayer() {
+            videoPlayerContainer.classList.add('hidden');
+            videoPlayerContainer.classList.remove('flex', 'flex-col', 'items-center');
+            homePage.classList.remove('hidden');
+            videoPlayerContainer.innerHTML = ''; // Stop video playback
+        }
+
+        function toggleTheaterMode() {
+            const playerWrapper = document.getElementById('player-wrapper');
+            const theaterButton = document.getElementById('theater-mode-btn');
+            
+            playerWrapper.classList.toggle('max-w-4xl');
+            playerWrapper.classList.toggle('max-w-7xl');
+
+            theaterButton.textContent = playerWrapper.classList.contains('max-w-7xl') ? 'Default View' : 'Theater Mode';
+        }
 
         // --- EVENT LISTENERS ---
+        
+        // Listener for sidebar toggle
         menuToggle.addEventListener('click', () => {
             sidebar.classList.toggle('-translate-x-full');
             sidebar.classList.toggle('transform-none');
         });
 
+        // Listener for search
+        searchInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                const query = searchInput.value.trim();
+                if (query) {
+                    window.location.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+                }
+            }
+        });
+
+        // Listener for clicking a video card (using event delegation)
+        videoGrid.addEventListener('click', (event) => {
+            const videoCard = event.target.closest('.video-card');
+            if (videoCard) {
+                const videoId = videoCard.dataset.videoId;
+                playVideo(videoId);
+            }
+        });
 
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             renderVideoGrid();
             lucide.createIcons();
         });
-
-        
     </script>
 </body>
 </html>

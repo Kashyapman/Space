@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register - Space</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* bg-gray-900 */
+            color: #f3f4f6; /* text-gray-200 */
+        }
+        .form-input {
+            position: relative;
+            appearance: none;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #374151; /* border-gray-700 */
+            background-color: #1f2937; /* bg-gray-800 */
+            color: #f3f4f6; /* text-gray-200 */
+        }
+        .form-input:focus {
+            z-index: 10;
+            outline: none;
+            border-color: #f43f5e; /* border-rose-500 */
+            box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.5);
+        }
+        .form-input.invalid {
+            border-color: #ef4444; /* border-red-500 */
+        }
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        /* Custom scrollbar for better dark mode aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1f2937; /* bg-gray-800 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4b5563; /* bg-gray-600 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280; /* bg-gray-500 */
+        }
+         .nav-link {
+              display: flex;
+              align-items: center;
+              padding: 0.75rem 1rem;
+              border-radius: 0.5rem;
+              color: #d1d5db; /* text-gray-300 */
+              font-weight: 500;
+              transition: background-color 0.2s, color 0.2s;
+         }
+         .nav-link:hover, .nav-link.active {
+            background-color: #374151; /* bg-gray-700 */
+            color: white;
+         }
+         .nav-link i {
+             margin-right: 1rem;
+         }
+    </style>
+</head>
+<body>
+    
+    <!-- Main Application Wrapper -->
+    <div id="app" class="h-screen flex flex-col">
+         <!-- Header -->
+        <header class="bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 px-4 py-2 flex items-center justify-between z-40 sticky top-0">
+            <div class="flex items-center space-x-4">
+                <button id="menu-toggle" class="p-2 rounded-full hover:bg-gray-700 md:hidden">
+                    <i data-lucide="menu"></i>
+                </button>
+                <a href="home.html" class="flex items-center space-x-2">
+                    <i data-lucide="brain-circuit" class="text-rose-500 w-8 h-8"></i>
+                    <span class="text-xl font-bold text-white hidden sm:block">Space</span>
+                </a>
+            </div>
+            <div class="flex-1 max-w-xl mx-4">
+                <div class="relative">
+                    <input type="search" placeholder="Search for courses, videos, books..." class="bg-gray-900 border border-gray-700 rounded-full w-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-rose-500">
+                    <div class="absolute left-3 top-1/2 -translate-y-1/2">
+                        <i data-lucide="search" class="w-5 h-5 text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+            <div id="user-actions" class="flex items-center space-x-4">
+                 <button id="header-login-btn" class="bg-rose-600 text-white px-4 py-1.5 rounded-md text-sm font-semibold hover:bg-rose-700 transition-colors">Log In</button>
+            </div>
+        </header>
+        
+        <div class="flex flex-1 overflow-hidden">
+            <!-- Sidebar -->
+            <aside id="sidebar" class="bg-gray-800 w-64 flex-shrink-0 flex flex-col space-y-2 p-4 fixed top-16 h-[calc(100vh-4rem)] md:relative md:top-0 md:h-full transform -translate-x-full md:translate-x-0 z-30">
+                  <nav class="flex flex-col space-y-1 flex-1">
+                      <a href="home.html" class="nav-link"><i data-lucide="home"></i><span>Home</span></a>
+                      <a href="#" class="nav-link"><i data-lucide="book-open"></i><span>E-Books</span></a>
+                      <a href="#" class="nav-link"><i data-lucide="trending-up"></i><span>Trending</span></a>
+                      <a href="#" class="nav-link"><i data-lucide="users"></i><span>Subscriptions</span></a>
+                      <hr class="border-gray-700 my-4">
+                      <a href="#" class="nav-link"><i data-lucide="library"></i><span>Library</span></a>
+                      <a href="#" class="nav-link"><i data-lucide="history"></i><span>History</span></a>
+                      <a href="#" class="nav-link"><i data-lucide="video"></i><span>Your Videos</span></a>
+                      <a href="#" class="nav-link"><i data-lucide="clock"></i><span>Watch Later</span></a>
+                  </nav>
+                  <div class="text-xs text-gray-500 p-2">
+                      &copy; 2025 Space. All rights reserved.
+                  </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main id="main-content" class="flex-1 bg-gray-900 overflow-y-auto flex flex-col items-center justify-center p-4">
+                <div class="w-full max-w-md">
+                    <div class="bg-gray-800 p-8 rounded-2xl shadow-2xl w-full">
+                        
+                        <!-- Login Form Container -->
+                        <div id="login-container">
+                            <h2 class="text-center text-3xl font-extrabold text-white mb-2">Welcome Back!</h2>
+                            <p class="text-center text-gray-400 mb-8">Sign in to continue your learning journey.</p>
+                            
+                            <form class="space-y-6" onsubmit="event.preventDefault(); alert('Login submitted!');">
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="email" class="sr-only">Email address</label>
+                                        <input id="email" name="email" type="email" autocomplete="email" required class="form-input rounded-md" placeholder="Email address">
+                                    </div>
+                                    <div>
+                                        <label for="password" class="sr-only">Password</label>
+                                        <input id="password" name="password" type="password" autocomplete="current-password" required class="form-input rounded-md" placeholder="Password">
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-rose-600 focus:ring-rose-500 border-gray-600 rounded bg-gray-700">
+                                        <label for="remember-me" class="ml-2 block text-sm text-gray-300"> Remember me </label>
+                                    </div>
+
+                                    <div class="text-sm">
+                                        <a href="#" class="font-medium text-rose-500 hover:text-rose-400"> Forgot your password? </a>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-rose-500 transition-colors">
+                                        Sign in
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="mt-6 relative">
+                                <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                                    <div class="w-full border-t border-gray-700"></div>
+                                </div>
+                                <div class="relative flex justify-center text-sm">
+                                    <span class="px-2 bg-gray-800 text-gray-400"> Or continue with </span>
+                                </div>
+                            </div>
+
+                            <div class="mt-6">
+                                <a href="#" onclick="alert('Signing in with Google!');" class="w-full inline-flex justify-center items-center py-3 px-4 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-sm font-medium text-gray-200 hover:bg-gray-600 transition-colors">
+                                    <svg class="w-5 h-5 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                                        <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.574l6.19,5.238C42.022,35.437,44,30.035,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
+                                    </svg>
+                                    <span>Sign in with Google</span>
+                                </a>
+                            </div>
+                            
+                            <p class="mt-8 text-center text-sm text-gray-400">
+                                Don't have an account?
+                                <a href="#" id="show-register-link" class="font-medium text-rose-500 hover:text-rose-400">
+                                    Register
+                                </a>
+                            </p>
+                        </div>
+
+                        <!-- Registration Form Container -->
+                        <div id="register-container" class="hidden">
+                             <h2 class="text-center text-3xl font-extrabold text-white mb-2">Create an Account</h2>
+                            <p class="text-center text-gray-400 mb-8">Join our community to start your learning journey.</p>
+                            
+                            <form id="register-form" class="space-y-4">
+                                <div>
+                                    <label for="name" class="sr-only">Full Name</label>
+                                    <input id="name" name="name" type="text" autocomplete="name" required class="form-input rounded-md" placeholder="Full Name">
+                                </div>
+                                <div>
+                                    <label for="username" class="sr-only">Username</label>
+                                    <input id="username" name="username" type="text" autocomplete="username" required class="form-input rounded-md" placeholder="Username (will be displayed publicly)">
+                                </div>
+                                <div>
+                                    <label for="register-email" class="sr-only">Email address</label>
+                                    <input id="register-email" name="email" type="email" autocomplete="email" required class="form-input rounded-md" placeholder="Email address">
+                                </div>
+                                <div>
+                                    <label for="register-password" class="sr-only">Password</label>
+                                    <input id="register-password" name="password" type="password" required class="form-input rounded-md" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9].*[^a-zA-Z0-9]).{12,}" title="Must contain at least 12 characters, including uppercase, lowercase, numbers, and at least 2 symbols.">
+                                    <p class="text-xs text-gray-500 mt-2">12+ characters, upper & lower case, numbers, and 2+ symbols.</p>
+                                </div>
+                                <div>
+                                    <label for="confirm-password" class="sr-only">Confirm Password</label>
+                                    <input id="confirm-password" name="confirm-password" type="password" required class="form-input rounded-md" placeholder="Confirm Password">
+                                    <p id="password-match-error" class="hidden text-xs text-red-500 mt-2">Passwords do not match.</p>
+                                </div>
+
+                                <div class="flex items-start">
+                                    <div class="flex items-center h-5">
+                                        <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-rose-600 focus:ring-rose-500 border-gray-600 rounded bg-gray-700">
+                                    </div>
+                                    <div class="ml-3 text-sm">
+                                        <label for="terms" class="text-gray-300">I agree to the <a href="#" class="font-medium text-rose-500 hover:text-rose-400">Terms and Conditions</a></label>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <button id="register-button" type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-rose-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                        Create Account
+                                    </button>
+                                </div>
+                            </form>
+
+                            <p class="mt-8 text-center text-sm text-gray-400">
+                                Already have an account?
+                                <a href="#" id="show-login-link" class="font-medium text-rose-500 hover:text-rose-400">
+                                    Sign In
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Alert Modal -->
+    <div id="alert-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-sm text-center border border-gray-700">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-900/50">
+                <i data-lucide="shield-alert" class="h-6 w-6 text-red-400"></i>
+            </div>
+            <h3 class="text-lg leading-6 font-medium text-white mt-4" id="alert-title">Invalid Password</h3>
+            <div class="mt-2">
+                <p class="text-sm text-gray-400" id="alert-message">
+                    <!-- Message will be injected here -->
+                </p>
+            </div>
+            <div class="mt-5">
+                <button type="button" id="close-alert-btn" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-rose-600 text-base font-medium text-white hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 focus:ring-offset-gray-800 sm:text-sm">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            
+            // --- DOM ELEMENTS ---
+            const loginContainer = document.getElementById('login-container');
+            const registerContainer = document.getElementById('register-container');
+            const showRegisterLink = document.getElementById('show-register-link');
+            const showLoginLink = document.getElementById('show-login-link');
+            const registerForm = document.getElementById('register-form');
+            const registerPassword = document.getElementById('register-password');
+            const confirmPassword = document.getElementById('confirm-password');
+            const passwordMatchError = document.getElementById('password-match-error');
+            const termsCheckbox = document.getElementById('terms');
+            const registerButton = document.getElementById('register-button');
+            const alertModal = document.getElementById('alert-modal');
+            const alertMessage = document.getElementById('alert-message');
+            const closeAlertBtn = document.getElementById('close-alert-btn');
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const headerLoginBtn = document.getElementById('header-login-btn');
+
+            // --- MENU TOGGLE LOGIC ---
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('transform-none');
+                sidebar.classList.toggle('-translate-x-full');
+            });
+            
+            headerLoginBtn.addEventListener('click', (e) => {
+                 e.preventDefault();
+                registerContainer.classList.add('hidden');
+                loginContainer.classList.remove('hidden');
+            });
+
+            // --- FORM TOGGLING LOGIC ---
+            showRegisterLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginContainer.classList.add('hidden');
+                registerContainer.classList.remove('hidden');
+            });
+
+            showLoginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                registerContainer.classList.add('hidden');
+                loginContainer.classList.remove('hidden');
+            });
+            
+            // --- REGISTRATION FORM VALIDATION ---
+            function validateForm() {
+                const passwordsMatch = registerPassword.value === confirmPassword.value;
+                const termsAgreed = termsCheckbox.checked;
+
+                if (registerPassword.value && confirmPassword.value) {
+                    if (passwordsMatch) {
+                        passwordMatchError.classList.add('hidden');
+                        confirmPassword.classList.remove('invalid');
+                    } else {
+                        passwordMatchError.classList.remove('hidden');
+                        confirmPassword.classList.add('invalid');
+                    }
+                } else {
+                     passwordMatchError.classList.add('hidden');
+                     confirmPassword.classList.remove('invalid');
+                }
+
+                registerButton.disabled = !(passwordsMatch && termsAgreed && registerForm.checkValidity());
+            }
+            
+            // --- FORM SUBMISSION & ALERT ---
+            registerForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                if (!registerPassword.checkValidity()) {
+                    alertMessage.textContent = registerPassword.title;
+                    alertModal.classList.remove('hidden');
+                    lucide.createIcons(); 
+                    return;
+                }
+                
+                alert('Registration submitted!');
+            });
+
+            closeAlertBtn.addEventListener('click', () => {
+                alertModal.classList.add('hidden');
+            });
+
+            registerForm.addEventListener('input', validateForm);
+        });
+    </script>
+</body>
+</html>
+
